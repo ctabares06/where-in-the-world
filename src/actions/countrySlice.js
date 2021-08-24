@@ -15,7 +15,10 @@ const initialState = {
 
 export const fetchAllCountries = createAsyncThunk(
 	'country/FETCH_ALL',
-	() => fetchCountries()
+	async () => {
+		const response = await fetchCountries();
+		return response;
+	}
 )
 
 const countrySlice = createSlice({
@@ -27,4 +30,4 @@ const countrySlice = createSlice({
 		.addCase(fetchAllCountries.pending, state => state.loading = true)
 });
 
-export default countrySlice;
+export default countrySlice.reducer;

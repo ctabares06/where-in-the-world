@@ -1,21 +1,26 @@
 import React, { Component } from "react";
-import moduleName from '../app'
+import { fetchAllCountries } from '../actions/countrySlice';
 import { connect } from "react-redux"
 
 class CountriesPage extends Component {
-  constructor() {
-    super();
-
+ 
+  componentDidMount(){
+    const { fetchAll } = this.props;
+    fetchAll();
   }
+
   render() {
     return <div></div>;
   }
 }
 
-const mapStateToProps = state => state.countries;
+const mapStateToProps = state =>({ 
+  countryList: state.country.countries,
+  loading: state.country.loading,
+});
 
 const mapDispatchToProps = dispatch => ({
-  fetchAll : () => dispatch({ type: "FETCH_ALL" }),
+  fetchAll: () => dispatch(fetchAllCountries().then(console.log)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(CountriesPage);
