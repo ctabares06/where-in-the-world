@@ -11,11 +11,15 @@ const fetchCountries = () => fetch('https://restcountries.eu/rest/v2/all')
 const initialState = {
 	countries: [],
 	loading: false,
+	error : {
+		name: "",
+		message: "",
+	},
 }
 
 export const fetchAllCountries = createAsyncThunk(
 	'country/FETCH_ALL',
-	() => fetchCountries()
+	fetchCountries
 )
 
 const countrySlice = createSlice({

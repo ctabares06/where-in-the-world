@@ -11,7 +11,9 @@ class CountriesPage extends Component {
   }
   componentDidMount() {
     const { fetchAllCountries } = this.props;
-    fetchAllCountries();
+    fetchAllCountries()
+      .unwrap()
+      .catch(({ message }) => alert(message));
   }
 
   render() {
