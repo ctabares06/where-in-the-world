@@ -1,12 +1,17 @@
 import React, { Component } from "react";
-import { fetchAllCountries } from '../actions/countrySlice';
-import { connect } from "react-redux"
+import { fetchAllCountries } from "../actions/countrySlice";
+import { connect } from "react-redux";
 
 class CountriesPage extends Component {
- 
-  componentDidMount(){
-    const { fetchAll } = this.props;
-    fetchAll();
+  constructor(props) {
+    super(props);
+    this.state = {
+      countries: [],
+    }
+  }
+  componentDidMount() {
+    const { fetchAllCountries } = this.props;
+    fetchAllCountries();
   }
 
   render() {
@@ -14,13 +19,13 @@ class CountriesPage extends Component {
   }
 }
 
-const mapStateToProps = state =>({ 
+const mapStateToProps = (state) => ({
   countryList: state.country.countries,
   loading: state.country.loading,
 });
 
-const mapDispatchToProps = dispatch => ({
-  fetchAll: () => dispatch(fetchAllCountries().then(console.log)),
-})
+const mapDispatchToProps = {
+  fetchAllCountries,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(CountriesPage);

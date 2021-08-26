@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-const fetchCountries = fetch('https://restcountries.eu/rest/v2/all')
+const fetchCountries = () => fetch('https://restcountries.eu/rest/v2/all')
 	.then(res => {
 		if (res.ok) {
 			return res.json();
@@ -15,19 +15,20 @@ const initialState = {
 
 export const fetchAllCountries = createAsyncThunk(
 	'country/FETCH_ALL',
-	async () => {
-		const response = await fetchCountries();
-		return response;
-	}
+	() => fetchCountries()
 )
 
 const countrySlice = createSlice({
 	name: "country",
 	initialState,
 	extraReducers: (builder) => builder
-		.addCase(fetchAllCountries.fulfilled, (state, action) => 
-			state = { countries: action.payload, loading: false })
-		.addCase(fetchAllCountries.pending, state => state.loading = true)
+		.addCase(fetchAllCountries.fulfilled, (state, action) => {
+			state.countries = action.payload;
+			state.loading = false;
+		})
+		.addCase(fetchAllCountries.pending, state => { 
+			state.loading = true;
+		})
 });
 
 export default countrySlice.reducer;
