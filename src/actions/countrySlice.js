@@ -44,15 +44,18 @@ const countrySlice = createSlice({
 			state.countries = action.payload;
 			state.loading = false;
 		})
-		.addCase(setCountries.pending, ({ loading }) => {
-			loading = true;
+		.addCase(setCountries.pending, (state) => {
+			state.loading = true;
 		})
 		.addCase(searchCountry.fulfilled, (state, action) => {
 			state.filter_countries = action.payload;
 			state.loading = false;
 		})
-		.addCase(searchCountry.pending, ({ loading }) => {
-			loading = true;
+		.addCase(searchCountry.pending, (state) => {
+			state.loading = true;
+		})
+		.addCase(searchCountry.rejected, (state) => {
+			state.filter_countries = [];
 		})
 });
 

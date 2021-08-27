@@ -12,17 +12,16 @@ class SearchCountry extends Component {
 
 	handleInput = ({ target: { value } }) => {
 		const { searchCountry } = this.props;
-		const { countryName } = this.state;
 
-		this.setState({ countryName: value });
-		searchCountry(countryName)
+		this.setState(() => ({ countryName: value }));
+		searchCountry(value)
 	}
 
 	render() {
 		const { countryName } = this.state;
 		return (
 			<div>
-				<input type="text" onKeyUp={this.handleInput} value={countryName} />
+				<input type="text" onChange={this.handleInput} value={countryName} />
 			</div>
 		)
 	}

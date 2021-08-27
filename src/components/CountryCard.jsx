@@ -1,5 +1,7 @@
 import React from 'react';
-import styled from 'styled-components'
+import styled from 'styled-components';
+import { withRouter } from 'react-router';
+import { Link } from 'react-router-dom';
 
 const Country = styled.div`
 	border-radius: 5px;
@@ -20,22 +22,24 @@ const CountryContent = styled.div`
 	padding: 1em;
 `
 
-const CountryCard = ({ props }) => {
+const CountryCard = ({ props, match : { path } }) => {
 	const { flag, name, population, region, capital } = props;
 
 	return (
-		<Country>
-			<div>
-				<Img className="country-image" src={flag} alt={name} />
-			</div>
-			<CountryContent>
-				<h4>{name}</h4>
-				<p>population: {population}</p>
-				<p>region: {region}</p>
-				<p>capital: {capital ? capital : "No registra"}</p>
-			</CountryContent>
-		</Country>
+		<Link to={path.concat("country/").concat(name)}>
+			<Country>
+				<div>
+					<Img className="country-image" src={flag} alt={name} />
+				</div>
+				<CountryContent>
+					<h4>{name}</h4>
+					<p>population: {population}</p>
+					<p>region: {region}</p>
+					<p>capital: {capital ? capital : "No registra"}</p>
+				</CountryContent>
+			</Country>
+		</Link>
 	)
 }
 
-export default CountryCard;
+export default withRouter(CountryCard);
