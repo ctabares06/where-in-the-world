@@ -1,33 +1,54 @@
 import React, { Component } from "react";
-import { fetchAllCountries } from "../actions/countrySlice";
+import styled from "styled-components";
+import { setCountries } from "../actions/countrySlice";
+import CountryCard from "./CountryCard";
 import { connect } from "react-redux";
+import SearchCountry from "./SearchCountry.";
+
+const CountryContainer = styled.div`
+  display: grid;
+	max-width: 1440px;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 1fr;
+	row-gap: 50px;
+	margin: 0 auto;
+`;
 
 class CountriesPage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      countries: [],
-    }
-  }
-  componentDidMount() {
-    const { fetchAllCountries } = this.props;
-    fetchAllCountries()
-      .unwrap()
-      .catch(({ message }) => alert(message));
-  }
+	componentDidMount() {
+		const { setCountries } = this.props;
+		setCountries()
+			.unwrap()
+			.catch(({ message }) => alert(message));
+	}
 
-  render() {
-    return <div></div>;
-  }
+	printCountries = () => {
+		const { countryList, filteredCountries } = this.props;	
+		return filteredCountries.length === 0 ? countryList : filteredCountries;
+	}
+
+	render() {
+		return (
+			<>
+				<SearchCountry />
+				<CountryContainer>
+					{this.printCountries().map((country) => (
+						<CountryCard props={country} key={country.alpha3Code} />
+					))}
+				</CountryContainer>
+			</>
+		);
+	}
 }
 
-const mapStateToProps = (state) => ({
-  countryList: state.country.countries,
-  loading: state.country.loading,
+const mapStateToProps = ({ country }) => ({
+	countryList: country.countries,
+	filteredCountries: country.filter_countries,
+	loading: country.loading,
 });
 
 const mapDispatchToProps = {
-  fetchAllCountries,
+	setCountries,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CountriesPage);
