@@ -23,10 +23,10 @@ const CountryContent = styled.div`
 `
 
 const CountryCard = ({ props, match : { path } }) => {
-	const { flag, name, population, region, capital } = props;
+	const { flag, name, population, region, capital, alpha3Code } = props;
 
 	return (
-		<Link to={path.concat("country/").concat(name)}>
+		<Link to={path.concat("country/").concat(alpha3Code)}>
 			<Country>
 				<div>
 					<Img className="country-image" src={flag} alt={name} />
