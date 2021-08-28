@@ -9,9 +9,10 @@ const HeaderStyles = styled.div`
 	right: 0;
 	padding: 1.5rem 5%;
 	background-color: ${props => props.theme.ebg};
-	box-shadow: 0px 4px 5px 1px #989898;
+	box-shadow: 0px 4px 5px 1px #acacac;
 
 	& h1 {
+		color: ${props => props.theme.title};
 		font-size: 1.5rem;
 	}
 `
