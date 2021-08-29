@@ -5,12 +5,11 @@ import CountryCard from "./CountryCard";
 import { connect } from "react-redux";
 
 const CountryContainer = styled.div`
-  display: grid;
-	max-width: 1440px;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: 1fr;
-	row-gap: 50px;
-	margin: 0 auto;
+  display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	align-items: stretch;
+	margin-bottom: 5%;
 `;
 
 class Countries extends Component {
