@@ -7,7 +7,7 @@ export const GlobalStyles = createGlobalStyle`
     background-color: ${props => props.theme.bg};
   }
   body {
-    font-size: 100%;
+    font-size: 16px;
     font-family: 'Nunito Sans', sans-serif;
     padding: 0px;
     margin: 0px;
