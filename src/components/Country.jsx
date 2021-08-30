@@ -2,16 +2,45 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import BackButton from './BackButton';
+import CountryItem from './CountryItem';
+import { PageStyles } from '../styles';
+import CountryLink from './CountryLink';
 
 const CountryStyle = styled.div`
 	display: flex;
-	justify-content: center;
-	flex-basis: 50%;
+`
+
+const CountryContent = styled.div`
+	flex-grow: 1;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	padding: 2.5% 5%;
+	& div {
+		flex-basis: 50%;
+		line-height: 1.6;
+	}
+	& span {
+		font-weight: 600;
+	}
+	& .full-width {
+		flex-basis: 100%;
+	}
+	& .full-width:first-child {
+		margin-bottom: auto;
+	}
+	& .full-width:last-child {
+		margin-top: auto;
+	}
+	& .borders {
+		display: inline-flex;
+		flex-wrap: wrap;
+	}
 `
 
 const Img = styled.img`
 	display: block;
-	max-width: 500px;
+	max-width: 700px;
 	height: auto;
 `
 
@@ -21,6 +50,7 @@ class Country extends Component {
 			currencies : [],
 			topLevelDomain : [],
 			languages: [],
+			borders: [],
 		}
 	}
 
@@ -33,26 +63,34 @@ class Country extends Component {
 
 	render() {
 		const { country } = this.state;
-	
+		const { countryList } = this.props;
 		return (
-			<>
+			<PageStyles>
 				<BackButton />
 				<CountryStyle>
 					<Img src={country.flag} alt="" />
-					<div>
-						<h3>{country.name}</h3>
-						<div>Native Name: {country.nativeName}</div>
-						<div>Population: {country.population}</div>
-						<div>Region: {country.region}</div>
-						<div>Sub Region: {country.subregion}</div>
-						<div>Capital: {country.capital}</div>
-						<div>Top Level Domain {country.topLevelDomain.join(' ')}</div>
-						<div>Currencies: {country.currencies.map(currency => currency.code).join(' ')}</div>
-						<div>languages: {country.languages.map(currency => currency.name).join(' ')}</div>
-						<div>BorderCountries: { country.map }</div>
-					</div>
+					<CountryContent>
+						<h1 className="full-width">{country.name}</h1>
+						<CountryItem name="Native Name" value={country.nativeName} />
+						<CountryItem name="Population" value={country.population} />
+						<CountryItem name="Region" value={country.region} />
+						<CountryItem name="Sub Region" value={country.subregion} />
+						<CountryItem name="Capital" value={country.capital} />
+						<CountryItem name="Top Level Domain" value={country.topLevelDomain.join(' ')} />
+						<CountryItem name="Currencies" value={country.currencies.map(currency => currency.code).join(' ')} />
+						<CountryItem name="Languages" value={country.languages.map(currency => currency.name).join(' ')} />
+						<div className="full-width">
+							<span>Border Countries: </span>
+							<div className="borders">
+								{ country.borders.map(id => {
+									const { name, alpha3Code } = countryList(id);
+									return <CountryLink id={alpha3Code} name={name} />
+								}) }
+							</div>
+						</div>
+					</CountryContent>
 				</CountryStyle>
-			</>
+			</PageStyles>
 		)
 	}
 }

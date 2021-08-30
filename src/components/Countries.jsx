@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 
 const CountryContainer = styled.div`
   display: flex;
-	justify-content: space-between;
+	justify-content: flex-start;
 	flex-wrap: wrap;
 	align-items: stretch;
 	margin-bottom: 5%;

@@ -8,7 +8,7 @@ import { GlobalStyles, lightTheme } from "../styles";
 
 const AppStyles = styled.div`
 	padding: 100px 2% 0px 2%;
-	max-width: 1440px;
+	max-width: 1390px;
 	margin: 0 auto;
 `
 
@@ -21,7 +21,7 @@ class App extends Component {
 					<Header />
 					<Switch>
 						<Route exact component={CountriesPage} path="/" />
-						<Route component={Country} path="/country/:countryId" />
+						<Route exact component={Country} path="/country/:countryId" />
 					</Switch>
 				</AppStyles>
 			</ThemeProvider>
