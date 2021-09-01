@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import styled, { ThemeProvider } from 'styled-components'; 
-import Header from './Header';
+import Header from '../components/Header';
 import CountriesPage from './CountriesPage';
 import Country from './Country';
 import { GlobalStyles, lightTheme } from "../styles";

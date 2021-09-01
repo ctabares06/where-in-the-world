@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Countries from './Countries';
-import SearchCountry from './SearchCountry';
+import Countries from '../components/Countries';
+import SearchCountry from '../components/SearchCountry';
 import { PageStyles } from '../styles';
 import { connect } from 'react-redux';
 import { 
