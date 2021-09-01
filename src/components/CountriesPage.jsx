@@ -3,30 +3,42 @@ import Countries from './Countries';
 import SearchCountry from './SearchCountry';
 import { PageStyles } from '../styles';
 import { connect } from 'react-redux';
-import { selectFilteredCountries, setCountries } from '../actions/countrySlice';
+import { 
+	selectFilteredCountries, 
+	setCountries,
+	selectCountries
+} from '../actions/countrySlice';
 
 class CountriesPage extends Component {
-	state = {
-		countries: [],
+	constructor(props) {
+		super(props);
+		this.state = {
+			countries: props.countriesList,
+			countryName: "",
+		}
 	}
 
 	componentDidMount() {
-		const { filteredCountries } = this.props;
-		setCountries();
-		this.setState({ countries: filteredCountries("") })
+		this.props.setCountries()
+			.then(() => {
+				this.setState({ countries: this.props.countriesList });
+			});
 	}
 
 	searchCountry = ({ target: { value } }) => {
 		const { filteredCountries } = this.props;
-		this.setState({ countries: filteredCountries(value) })		
+		this.setState({ 
+			countryName: value, 
+			countries: filteredCountries(value) 
+		})		
 	}
 
 	render() {
-		const { countries } = this.state;
+		const { countries, countryName } = this.state;
 		return (
 			<PageStyles>
 				<div className="filters">
-					<SearchCountry handleChange={this.searchCountry} />
+					<SearchCountry handleChange={this.searchCountry} input={countryName} />
 				</div>
 				<Countries countries={countries} />
 			</PageStyles>
@@ -36,6 +48,7 @@ class CountriesPage extends Component {
 
 const mapStateToProps = (state) => ({
 	filteredCountries: selectFilteredCountries(state),
+	countriesList: selectCountries(state), 
 })
 
 const mapDispatchToProps = {

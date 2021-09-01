@@ -46,7 +46,7 @@ const countrySlice = createSlice({
 		})
 });
 
-const selectCountries = (state) => state.country.countries;
+export const selectCountries = (state) => state.country.countries;
 export const selectCurrentCountry = ({ country : { current_country } }) => current_country;
 
 // export const currentCountrySelector = createSelector(
@@ -63,7 +63,7 @@ export const selectFilteredCountries = createSelector(
 	selectCountries,
 	countries => search => {
 		if (search !== "") {
-			return countries.filter(({ name }) => name.includes(search));
+			return countries.filter(({ name }) => name.toLowerCase().includes(search.toLowerCase()));
 		} else {
 			return countries;
 		}

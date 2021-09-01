@@ -32,20 +32,12 @@ const SearchStyle = styled.div`
 const ShadowSearch = withShadow(SearchStyle);
 
 class SearchCountry extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			paramSearch : '',
-		}
-	}
-
 	render() {
-		const { paramSearch } = this.state;
-		const { handleChange } = this.props;
+		const { handleChange, input } = this.props;
 		return (
 			<ShadowSearch>
 				<FontAwesomeIcon icon={faSearch} />
-				<input type="text" onChange={handleChange} value={paramSearch} placeholder="Search for a country..." />
+				<input type="text" onChange={handleChange} value={input} placeholder="Search for a country..." />
 			</ShadowSearch>
 		)
 	}
