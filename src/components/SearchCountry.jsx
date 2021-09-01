@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
-import { searchCountry } from '../actions/countrySlice';
 import { withShadow } from '../styles';
 
 
@@ -37,30 +35,20 @@ class SearchCountry extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			countryName : '',
+			paramSearch : '',
 		}
 	}
 
-	handleInput = ({ target: { value } }) => {
-		const { searchCountry } = this.props;
-
-		this.setState(() => ({ countryName: value }));
-		searchCountry(value)
-	}
-
 	render() {
-		const { countryName } = this.state;
+		const { paramSearch } = this.state;
+		const { handleChange } = this.props;
 		return (
 			<ShadowSearch>
 				<FontAwesomeIcon icon={faSearch} />
-				<input type="text" onChange={this.handleInput} value={countryName} placeholder="Search for a country..." />
+				<input type="text" onChange={handleChange} value={paramSearch} placeholder="Search for a country..." />
 			</ShadowSearch>
 		)
 	}
 }
 
-const dispatchMapToProps = {
-	searchCountry,
-}
-
-export default connect(null, dispatchMapToProps)(SearchCountry);
+export default SearchCountry;

@@ -8,17 +8,14 @@ const fetchCountries = () => fetch('https://restcountries.eu/rest/v2/all')
 		throw new Error('Error calling the api');
 	})
 
-const fetchCountriesByName = (name) => fetch(`https://restcountries.eu/rest/v2/name/${name}`)
-	.then(res => {
-		if (res.ok) {
-			return res.json();
-		}
-		throw new Error('Error calling the api');
-	})
-
 const initialState = {
 	countries: [],
-	filter_countries: [],
+	current_country : {
+		currencies : [],
+		topLevelDomain : [],
+		languages: [],
+		borders: [],
+	},
 	loading: false,
 	error: {
 		name: "",
@@ -31,14 +28,14 @@ export const setCountries = createAsyncThunk(
 	fetchCountries
 )
 
-export const searchCountry = createAsyncThunk(
-	'country/FILTER_COUNTRIES',
-	(name) => fetchCountriesByName(name)
-)
-
 const countrySlice = createSlice({
 	name: "country",
 	initialState,
+	reducers: {
+		setCurrent(state, { payload }) {
+			state.current_country = state.countries.filter(({ alpha3Code }) => alpha3Code === payload)[0];
+		},
+	},
 	extraReducers: (builder) => builder
 		.addCase(setCountries.fulfilled, (state, action) => {
 			state.countries = action.payload;
@@ -47,30 +44,32 @@ const countrySlice = createSlice({
 		.addCase(setCountries.pending, (state) => {
 			state.loading = true;
 		})
-		.addCase(searchCountry.fulfilled, (state, action) => {
-			state.filter_countries = action.payload;
-			state.loading = false;
-		})
-		.addCase(searchCountry.pending, (state) => {
-			state.loading = true;
-		})
-		.addCase(searchCountry.rejected, (state) => {
-			state.filter_countries = [];
-		})
 });
 
 const selectCountries = (state) => state.country.countries;
-const selectCurrentCountry = ({ country : { countries } }, props) => ({...countries.filter(({ alpha3Code }) => alpha3Code === props.key)});
-const selectBorders = ({ country : { countries }}) => countries.borders;
+export const selectCurrentCountry = ({ country : { current_country } }) => current_country;
 
-export const currentCountry = createSelector(
-	selectCurrentCountry,
-	country => country
+// export const currentCountrySelector = createSelector(
+// 	selectCurrentCountry,
+// 	country => country
+// )
+
+export const selectCountryByAlpha = createSelector(
+	selectCountries,
+	countries => code => countries.filter(({ alpha3Code }) => alpha3Code === code)[0],
 )
 
-// export const selectByAlpha = createSelector(
-// 	selectCountries,
-// 	countries => select,
-// )
+export const selectFilteredCountries = createSelector(
+	selectCountries,
+	countries => search => {
+		if (search !== "") {
+			return countries.filter(({ name }) => name.includes(search));
+		} else {
+			return countries;
+		}
+	}
+)
+
+export const { setCurrent } = countrySlice.actions;
 
 export default countrySlice.reducer;
