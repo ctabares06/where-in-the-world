@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
-import Countries from '../components/Countries';
-import SearchCountry from '../components/SearchCountry';
-import { PageStyles } from '../styles';
 import { connect } from 'react-redux';
+import CountryCard from './CountryCard';
+import { 
+	Select,
+	FlexContainer,
+	Search 
+} from '../components';
+import { PageStyles } from '../styles';
 import { 
 	selectFilteredCountries, 
 	setCountries,
@@ -38,9 +42,18 @@ class CountriesPage extends Component {
 		return (
 			<PageStyles>
 				<div className="filters">
-					<SearchCountry handleChange={this.searchCountry} input={countryName} />
+					<Search 
+						handleChange={this.searchCountry} 
+						input={countryName}
+						placeHolder="Search for a country..." 
+					/>
+					<Select>
+						<option value="value">option</option>
+					</Select>
 				</div>
-				<Countries countries={countries} />
+				<FlexContainer>
+					{ countries.map((country, index) => <CountryCard country={country} key={index} />) }
+				</FlexContainer>
 			</PageStyles>
 		)
 	}

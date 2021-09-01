@@ -13,6 +13,7 @@ const ButtonStyles = styled.button`
 	padding: .5em 2em;
   text-align: center;
   margin: .5em .5em;
+	${ withShadow }
 	& span {
 		margin-left: .5em;
 	}
@@ -21,15 +22,13 @@ const ButtonStyles = styled.button`
   }
 `
 
-const ButtonShadow = withShadow(ButtonStyles); 
-
 const CountryLink = ({ id, name }) => {
 	return (
-  	<ButtonShadow>
+  	<ButtonStyles>
 			<Link to={"/country/".concat(id)} >
   			{ name }
 			</Link>
-  	</ButtonShadow>
+  	</ButtonStyles>
 	)
 }
 

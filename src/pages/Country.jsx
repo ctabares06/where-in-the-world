@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import BackButton from '../components/BackButton';
-import CountryItem from '../components/CountryItem';
+import CountryItem from './CountryItem';
 import { PageStyles } from '../styles';
-import CountryLink from '../components/CountryLink';
+import CountryLink from './CountryLink';
 import { setCurrent, selectCurrentCountry, selectCountryByAlpha } from '../actions/countrySlice'
 
 const CountryStyle = styled.div`

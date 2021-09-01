@@ -14,6 +14,7 @@ const SearchStyle = styled.div`
 	padding: 1em 1.5em;
 	display: flex;
 	align-items: center;
+	${ withShadow }
 	& input {	
 		display: block;
 		width: 100%;
@@ -29,18 +30,16 @@ const SearchStyle = styled.div`
 	}
 `
 
-const ShadowSearch = withShadow(SearchStyle);
-
-class SearchCountry extends Component {
+class Search extends Component {
 	render() {
-		const { handleChange, input } = this.props;
+		const { handleChange, input, placeHolder } = this.props;
 		return (
-			<ShadowSearch>
+			<SearchStyle>
 				<FontAwesomeIcon icon={faSearch} />
-				<input type="text" onChange={handleChange} value={input} placeholder="Search for a country..." />
-			</ShadowSearch>
+				<input type="text" onChange={handleChange} value={input} placeholder={placeHolder} />
+			</SearchStyle>
 		)
 	}
 }
 
-export default SearchCountry;
+export default Search;

@@ -16,12 +16,11 @@ const ButtonStyles = styled.button`
 	padding: .5em 2em;
 	display: flex;
 	align-items: center;
+	${ withShadow }
 	& span {
 		margin-left: .5em;
 	}
 `
-
-const ButtonShadow = withShadow(ButtonStyles); 
 
 class BackButton extends Component {
   handleClick = () => {
@@ -31,10 +30,10 @@ class BackButton extends Component {
 
   render() {
   	return (
-  		<ButtonShadow onClick={this.handleClick}>
+  		<ButtonStyles onClick={this.handleClick}>
   			<FontAwesomeIcon icon={faArrowLeft} />
   			<span>Back</span>
-  		</ButtonShadow>
+  		</ButtonStyles>
   	)
   }
 }

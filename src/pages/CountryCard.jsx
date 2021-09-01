@@ -2,22 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
-import { withShadow } from '../styles';
-
-const Country = styled.div`
-	border-radius: 5px;
-	width: 250px;
-	background-color: hsl(0, 0%, 100%);
-	margin: 0 2.5%;
-	margin-bottom: 50px;
-	color: ${({ theme }) => theme.title};
-	& a {
-		color: inherit;
-	}
-	& :last-child {
-		margin-right: 0px;
-	}
-`
+import { Card } from '../components'
 
 const CountryContent = styled.div`
 	margin: 1.5em 1em 2em 1em; 
@@ -41,13 +26,11 @@ const Img = styled.img`
 	border-radius: 5px 5px 0 0;
 `
 
-const CountryShadow = withShadow(Country);
-
-const CountryCard = ({ props, match : { path } }) => {
-	const { flag, name, population, region, capital, alpha3Code } = props;
+const CountryCard = ({ country, match : { path } }) => {
+	const { flag, name, population, region, capital, alpha3Code } = country;
 
 	return (
-		<CountryShadow>
+		<Card>
 			<Link to={path.concat("country/").concat(alpha3Code)}>
 				<div>
 					<Img className="country-image" src={flag} alt={name} />
@@ -68,7 +51,7 @@ const CountryCard = ({ props, match : { path } }) => {
 					</p>
 				</CountryContent>
 			</Link>
-		</CountryShadow>
+		</Card>
 	)
 }
 

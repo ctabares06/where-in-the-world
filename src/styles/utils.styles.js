@@ -1,6 +1,6 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-export const withShadow = (Component) => styled(Component)`
+export const withShadow = css`
   box-shadow: 0px 3px 5px 1px rgba(152,152,152,0.2);
 `
 export const PageStyles = styled.div`
@@ -10,6 +10,8 @@ grid-template-rows: [filters-start] 20% [filters-end countries-start] auto [coun
 row-gap: 50px;
 align-items: center;
 & .filters {
+  display: flex;
+  justify-content: space-between;
   margin: 0 2.5%;
 }
 `
