@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, createSelector } from '@reduxjs/toolkit';
 
 const fetchCountries = () => fetch('https://restcountries.eu/rest/v2/all')
 	.then(res => {
@@ -58,5 +58,19 @@ const countrySlice = createSlice({
 			state.filter_countries = [];
 		})
 });
+
+const selectCountries = (state) => state.country.countries;
+const selectCurrentCountry = ({ country : { countries } }, props) => ({...countries.filter(({ alpha3Code }) => alpha3Code === props.key)});
+const selectBorders = ({ country : { countries }}) => countries.borders;
+
+export const currentCountry = createSelector(
+	selectCurrentCountry,
+	country => country
+)
+
+// export const selectByAlpha = createSelector(
+// 	selectCountries,
+// 	countries => select,
+// )
 
 export default countrySlice.reducer;

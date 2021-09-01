@@ -5,6 +5,7 @@ import BackButton from './BackButton';
 import CountryItem from './CountryItem';
 import { PageStyles } from '../styles';
 import CountryLink from './CountryLink';
+import { currentCountry } from '../actions/countrySlice'
 
 const CountryStyle = styled.div`
 	display: flex;
@@ -58,7 +59,18 @@ class Country extends Component {
 		const { countryList, match } = this.props;
 		const { params : { countryId } } = match;
 
-		this.setState({ country : countryList(countryId) });
+		console.log(countryList);
+
+		this.setState({ country : countryList });
+	}
+
+	componentDidUpdate(prevProps) {
+		const { match : { params : { countryId : prevCountryId }}} = prevProps;
+		const { countryList, match } = this.props;
+		const { params : { countryId } } = match;
+		if (prevCountryId !== countryId) {
+			this.setState({ country : countryList });
+		}
 	}
 
 	render() {
@@ -81,12 +93,12 @@ class Country extends Component {
 						<CountryItem name="Languages" value={country.languages.map(currency => currency.name).join(' ')} />
 						<div className="full-width">
 							<span>Border Countries: </span>
-							<div className="borders">
+							{/* <div className="borders">
 								{ country.borders.map(id => {
 									const { name, alpha3Code } = countryList(id);
 									return <CountryLink id={alpha3Code} name={name} />
 								}) }
-							</div>
+							</div> */}
 						</div>
 					</CountryContent>
 				</CountryStyle>
@@ -95,8 +107,8 @@ class Country extends Component {
 	}
 }
 
-const mapStateToProps = ({ country }) => ({
-	countryList: (id) => country.countries.filter(country => country.alpha3Code === id)[0],
+const mapStateToProps = (state, props) => ({
+	countryList: currentCountry(state, props)[0],
 });
 
 export default connect(mapStateToProps, null)(Country);
