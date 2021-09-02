@@ -5,14 +5,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSortDown } from '@fortawesome/free-solid-svg-icons';
 
 class Select extends Component {
-  state = {
-  	show: false,
-  	options: [],
-  	current: {
-  		value: "",
-  		text: "", 
-  	}
-  }
+	state = {
+		show: false,
+		options: [],
+		current: {
+			value: "",
+			text: "", 
+		}
+	}
 
 	toggleDropBox = () => {
 		this.setState(({ show }) => ({
@@ -20,17 +20,39 @@ class Select extends Component {
 		}));
 	}
 
-	setCurrentValue = (value) => () => {
+	sendSelected = () => {
+		const { change } = this.props;
+		const { current } = this.state;
+
+		change(current.value);
+	}
+
+	optionClickHandler = (value) => {
 		if(value?.disable) {
-			return true;
+			return;
 		}
 
-		this.setState({
-			current: value
+		this.setCurrentValue(value)
+			.then(() => this.sendSelected());
+	}
+
+	setCurrentValue = (value) => 
+		new Promise((resolve) => {
+			this.setState({
+				current: value
+			});
+			resolve();
 		});
+
+	hideWithClick = () => {
+		const { show } = this.state;
+		if (show === true) {
+			this.toggleDropBox();
+		}
 	}
  
 	componentDidMount() {
+		// document.getElementById('root').addEventListener('click', this.hideWithClick);	
   	if (this.props?.default && this.props.default === true) {
   		this.setState({ options: [
   			{ 
@@ -49,17 +71,21 @@ class Select extends Component {
 		}));
 	}
 
+	componentWillUnmount() {
+		// document.getElementById('root').removeEventListener('click', this.hideWithClick);
+	}
+
 	render(){
-  	const { options, show, current } = this.state;
+  	const { options, show, current, dropBox } = this.state;
   	return (
   		<SelectStyles onClick={this.toggleDropBox}>
 				{ current.text }
 				<Icon icon={faSortDown} />
-  			{ show && <DropBox>
+  			{ show && <DropBox ref={dropBox}>
 					{
 						options.map((option, index) => (
 							<Option 
-								onClick={	this.setCurrentValue(option) }
+								onClick={ () =>	this.optionClickHandler(option) }
 								className={ option?.disabled === true ? "disabled" : "" }
 								key={index}
 							>
@@ -98,6 +124,7 @@ const DropBox = styled.div`
 	position: absolute;
 	background-color: inherit;
 	color: inherit;
+	z-index: 1;
 	top: 70px;
 	left: 0;
 	right: 0;
@@ -107,11 +134,17 @@ const DropBox = styled.div`
 const Option = styled.div`
 	text-align: center;
 	cursor: inherit;
-	margin: .5rem 0;
-	& :hover {
-		background-color: pink;
+	padding: 1rem 0;
+	:hover {
+		background-color: ${ ({ theme }) => theme.bg };
 	}
-	& .disabled {
+	:first-child {
+		border-radius: 5px 5px 0 0;
+	}
+	:last-child {
+		border-radius: 0 0 5px 5px;
+	}
+	.disabled {
 		color: ${ ({ theme }) => theme.text }
 	}
 `

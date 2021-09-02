@@ -4,6 +4,7 @@ import styled from "styled-components";
 const HeaderStyles = styled.div`
 	box-sizing: border-box;
 	position: fixed;
+	z-index: 2;
 	top: 0;
 	left: 0;
 	right: 0;

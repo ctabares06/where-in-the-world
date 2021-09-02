@@ -6,24 +6,27 @@ import {
 	FlexContainer,
 	Search 
 } from '../components';
-import { PageStyles } from '../styles';
 import { 
 	selectFilteredCountries, 
 	setCountries,
+	setCountriesByRegion,
 	selectCountries
 } from '../actions/countrySlice';
+import { PageStyles } from '../styles';
 
 class CountriesPage extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			countries: props.countriesList,
-			countryName: "",
+			countryName: '',
 			options: [
-				{ value: "value", text: "text" },
-				{ value: "value2", text: "text2" },
-				{ value: "value3", text: "text3" },
-				{ value: "value4", text: "text4" },
+				{ value: '', text: "All" },
+				{ value: 'Africa', text: 'Africa' },
+				{ value: 'Americas', text: 'Americas' },
+				{ value: 'Asia', text: 'Asia' },
+				{ value: 'Europe', text: 'Europe' },
+				{ value: 'Oceania', text: 'Oceania' },
 			]
 		}
 	}
@@ -32,6 +35,15 @@ class CountriesPage extends Component {
 		this.props.setCountries()
 			.then(() => {
 				this.setState({ countries: this.props.countriesList });
+			});
+	}
+
+	countryByRegion = (region) => {
+		this.props.setCountriesByRegion(region)
+			.then(() => {
+				this.setState({
+					countries: this.props.countriesList,
+				});
 			});
 	}
 
@@ -55,7 +67,7 @@ class CountriesPage extends Component {
 					/>
 					<Select 
 						options={options} 
-						default={true}
+						change={this.countryByRegion}
 					>
 						<option value="value">option</option>
 					</Select>
@@ -75,6 +87,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
 	setCountries,
+	setCountriesByRegion,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CountriesPage);
