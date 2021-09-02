@@ -1,5 +1,6 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
 const HeaderStyles = styled.div`
 	box-sizing: border-box;
@@ -17,11 +18,16 @@ const HeaderStyles = styled.div`
 		font-size: 1.5rem;
 	}
 `
+const BasePath = styled(Link)`
+	cursor: pointer;
+`
 
 const Header = () => {
 	return (
 		<HeaderStyles>
-			<h1>Where in the World?</h1>
+			<BasePath to="/">
+				<h1>Where in the World?</h1>
+			</BasePath>
 		</HeaderStyles>
 	);
 };
