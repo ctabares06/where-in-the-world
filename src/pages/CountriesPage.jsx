@@ -19,6 +19,12 @@ class CountriesPage extends Component {
 		this.state = {
 			countries: props.countriesList,
 			countryName: "",
+			options: [
+				{ value: "value", text: "text" },
+				{ value: "value2", text: "text2" },
+				{ value: "value3", text: "text3" },
+				{ value: "value4", text: "text4" },
+			]
 		}
 	}
 
@@ -38,7 +44,7 @@ class CountriesPage extends Component {
 	}
 
 	render() {
-		const { countries, countryName } = this.state;
+		const { countries, countryName, options } = this.state;
 		return (
 			<PageStyles>
 				<div className="filters">
@@ -47,7 +53,10 @@ class CountriesPage extends Component {
 						input={countryName}
 						placeHolder="Search for a country..." 
 					/>
-					<Select>
+					<Select 
+						options={options} 
+						default={true}
+					>
 						<option value="value">option</option>
 					</Select>
 				</div>
