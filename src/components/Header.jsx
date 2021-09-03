@@ -13,6 +13,9 @@ const HeaderStyles = styled.div`
 	padding: 1.5rem 5%;
 	background-color: ${props => props.theme.ebg};
 	box-shadow: 0px 4px 5px 1px #acacac;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 
 	& h1 {
 		color: ${props => props.theme.title};
@@ -21,6 +24,7 @@ const HeaderStyles = styled.div`
 `
 const BasePath = styled(Link)`
 	cursor: pointer;
+	width: 250px;
 `
 
 const Header = () => {
