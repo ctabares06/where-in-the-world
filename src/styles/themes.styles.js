@@ -5,7 +5,7 @@ export const lightTheme = {
 	ebg: '#ffffff',
 } 
 
-export const darTheme = {
+export const darkTheme = {
 	bg: '#202c37',
 	text: '#ffffff',
 	title: '#ffffff',

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import ChangeTheme from '../pages/ChangeTheme';
 
 const HeaderStyles = styled.div`
 	box-sizing: border-box;
@@ -28,6 +29,7 @@ const Header = () => {
 			<BasePath to="/">
 				<h1>Where in the World?</h1>
 			</BasePath>
+			<ChangeTheme />
 		</HeaderStyles>
 	);
 };
