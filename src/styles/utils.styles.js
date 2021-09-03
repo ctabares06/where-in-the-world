@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 
 export const withShadow = css`
-  box-shadow: 0px 3px 5px 1px rgba(152,152,152,0.2);
+  box-shadow: 0px 3px 5px 1px ${ ({ theme }) => theme.shadow };
 `
 export const PageStyles = styled.div`
 display: grid;	

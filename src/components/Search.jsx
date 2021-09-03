@@ -24,8 +24,6 @@ const SearchStyle = styled.div`
 		border: none;	
 		font-size: inherit;
 		padding-left: 1em;
-	}
-	& input:focus {
 		color: inherit;
 	}
 `

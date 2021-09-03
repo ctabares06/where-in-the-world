@@ -9,7 +9,7 @@ const ButtonStyles = styled.button`
 	background-color: ${ ({ theme }) => theme.ebg };
 	border-radius: 5px;
 	border: none;
-	color: ${ ({ theme }) => theme.text };
+	color: ${ ({ theme }) => theme.title };
 	padding: .5em 2em;
   text-align: center;
   margin: .5em .5em;
@@ -17,17 +17,19 @@ const ButtonStyles = styled.button`
 	& span {
 		margin-left: .5em;
 	}
-  & a {
-    text-decoration: none;
-  }
+`
+
+const StyledLink = styled(Link)`
+	text-decoration: none;
+	color: inherit;
 `
 
 const CountryLink = ({ id, name }) => {
 	return (
   	<ButtonStyles>
-			<Link to={"/country/".concat(id)} >
+			<StyledLink to={"/country/".concat(id)} >
   			{ name }
-			</Link>
+			</StyledLink>
   	</ButtonStyles>
 	)
 }

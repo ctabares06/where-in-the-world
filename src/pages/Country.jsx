@@ -12,6 +12,7 @@ const CountryStyle = styled.div`
 `
 
 const CountryContent = styled.div`
+	color: ${ ({ theme }) => theme.title };
 	flex-grow: 1;
 	display: flex;
 	flex-wrap: wrap;

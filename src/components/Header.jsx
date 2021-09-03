@@ -12,7 +12,7 @@ const HeaderStyles = styled.div`
 	right: 0;
 	padding: 1.5rem 5%;
 	background-color: ${props => props.theme.ebg};
-	box-shadow: 0px 4px 5px 1px #acacac;
+	box-shadow: 0px 4px 5px 1px ${ ({ theme }) => theme.shadow };
 	display: flex;
 	justify-content: space-between;
 	align-items: center;

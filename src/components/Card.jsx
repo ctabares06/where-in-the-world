@@ -4,7 +4,7 @@ import { withShadow } from '../styles';
 const Card = styled.div`
 	border-radius: 5px;
 	width: 250px;
-	background-color: hsl(0, 0%, 100%);
+	background-color: ${ ({ theme }) => theme.ebg };
 	margin: 0 2.5%;
 	margin-bottom: 50px;
 	color: ${({ theme }) => theme.title};
