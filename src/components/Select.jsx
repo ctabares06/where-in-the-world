@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, createRef } from 'react'
 import styled from 'styled-components'
 import { withShadow } from '../styles'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -6,7 +6,7 @@ import { faSortDown } from '@fortawesome/free-solid-svg-icons';
 
 class Select extends Component {
 	state = {
-		show: false,
+		dropBox: createRef(),
 		options: [],
 		current: {
 			value: "",
@@ -15,9 +15,19 @@ class Select extends Component {
 	}
 
 	toggleDropBox = () => {
-		this.setState(({ show }) => ({
-			show: !show
-		}));
+		const { dropBox : { current : dropBox } } = this.state;
+		if (dropBox.classList.contains('shown')) {
+			dropBox.classList.remove('shown');
+		} else {
+			dropBox.classList.add('shown');
+		}
+	}
+
+	handleBlur = () => {
+		const { dropBox : { current : dropBox } } = this.state;
+		if (dropBox.classList.contains('shown')) {
+			dropBox.classList.remove('shown');
+		}
 	}
 
 	sendSelected = () => {
@@ -45,14 +55,10 @@ class Select extends Component {
 		});
 
 	hideWithClick = () => {
-		const { show } = this.state;
-		if (show === true) {
-			this.toggleDropBox();
-		}
+
 	}
  
 	componentDidMount() {
-		// document.getElementById('root').addEventListener('click', this.hideWithClick);	
   	if (this.props?.default && this.props.default === true) {
   		this.setState({ options: [
   			{ 
@@ -71,17 +77,13 @@ class Select extends Component {
 		}));
 	}
 
-	componentWillUnmount() {
-		// document.getElementById('root').removeEventListener('click', this.hideWithClick);
-	}
-
 	render(){
-  	const { options, show, current, dropBox } = this.state;
+  	const { options, current, dropBox } = this.state;
   	return (
-  		<SelectStyles onClick={this.toggleDropBox}>
+  		<SelectStyles tabIndex="1" onClick={this.toggleDropBox} onBlur={this.handleBlur}>
 				{ current.text }
 				<Icon icon={faSortDown} />
-  			{ show && <DropBox ref={dropBox}>
+  			<DropBox ref={dropBox}>
 					{
 						options.map((option, index) => (
 							<Option 
@@ -93,7 +95,7 @@ class Select extends Component {
 							</Option>
 						))
 					}
-  			</DropBox> }
+  			</DropBox>
   		</SelectStyles>
   	)
 	}
@@ -119,7 +121,8 @@ const Icon = styled(FontAwesomeIcon)`
 	margin-bottom: .5rem;
 `
 
-const DropBox = styled.div`
+const DropBox = styled.div`	
+	display: none;
 	border-radius: 5px;
 	position: absolute;
 	background-color: inherit;
@@ -129,6 +132,10 @@ const DropBox = styled.div`
 	left: 0;
 	right: 0;
 	${withShadow}
+
+	&.shown {
+		display: block;
+	}
 `
 
 const Option = styled.div`
